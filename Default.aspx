@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <main>
-        Hello World!
+        <asp:GridView ID="Categories" runat="server"></asp:GridView>
     </main>
 
 </asp:Content>
