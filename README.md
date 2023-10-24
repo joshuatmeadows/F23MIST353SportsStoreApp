@@ -4,54 +4,66 @@
 
 ### Navigating Through Commits
 
-For a comprehensive understanding of this project's development and progression, it's crucial to sift through the commit history. Every commit encapsulates the content covered in each class session, providing detailed explanations and context. If you're joining in midway or find certain aspects confusing, consider revisiting previous commits to gain a clearer perspective on the project's journey.
+To comprehensively understand and follow the development of this project, it's pivotal to review the commit history. Each commit captures the content and topics discussed during each class session, providing detailed explanations and context. If you're starting mid-project or some changes seem ambiguous, revisiting prior commits can illuminate the path we've traversed.
 
 ---
 
 ## Current Commit Changes
 
-### 1. Connection String Addition
+### 1. Introduction of the [`ProductsByCategory.aspx`](ProductsByCategory.aspx) Page
 
-In this phase of the project, we've added a connection string for "SportsStoreDB" in the [`Web.config`](Web.config) file. This connection string is pivotal for establishing a link between our ASP.NET application and the database.
+We've expanded the project by introducing a new page named `ProductsByCategory.aspx`. This page is designed to display products under a specific category.
 
-**Note**: Depending on your setup and configurations, your connection string might slightly differ from what's provided in the repo. Ensure that it corresponds to your SQL Server setup.
-
-### 2. "Hello World!" Replacement
-
-We've transitioned from a simple text-based output to displaying dynamic data. The text "Hello World!" on [`Default.aspx`](Default.aspx) has been replaced with an ASP.NET GridView control:
+The central component on this page is the ASP.NET GridView control:
 
 ```xml
-<asp:GridView ID="Categories" runat="server"></asp:GridView>
+<asp:GridView ID="Products" runat="server"></asp:GridView>
 ```
 
-This control is designed to display data in a tabular format.
+The GridView is intended to display product data in a tabular format.
 
-### 3. Backend Logic
+### 2. Backend Logic for [`ProductsByCategory.aspx.cs`](ProductsByCategory.aspx.cs)
 
-In the code-behind for `Default.aspx` (i.e., [`Default.aspx.cs`](Default.aspx.cs)), significant changes have been introduced:
+The code-behind for this page (`ProductsByCategory.aspx.cs`) has the following essential elements:
 
-- **GetDataFromDatabase Method**: This method establishes a connection to our "SportsStoreDB" using the connection string from the `Web.config`. It then invokes a stored procedure (`spGetAllCategories`) to fetch all category data, populating a DataTable.
+- **GetDataFromDatabase Method**: This method does the heavy lifting:
 
-- **Page_Load Method**: This method, which is triggered when the page loads, is now responsible for setting the data source of our GridView (`Categories`) to the data fetched from the database. It then binds this data, ensuring that it gets displayed on the page.
+    - Establishes a connection to "SportsStoreDB" via the connection string.
+    - Retrieves the category ID from the query string.
+    - Executes a stored procedure (`spGetProductsinCategory`) with a parameterized query to prevent SQL injection, and fetches the products related to the provided category ID.
+    
+- **Page_Load Method**: Similar to the earlier approach, this method binds the fetched data to the GridView (`Products`) so it's displayed when the page loads.
 
-**Concepts Explored**:
+### 3. Refinement of [`Default.aspx`](Default.aspx) GridView
 
-- **Database Connectivity**: The process of setting up a connection string and establishing a link between the web application and a database.
+The GridView in `Default.aspx` has been replaced by an ASP.NET Repeater control. This control is more flexible and allows us to display categories as clickable links:
+
+```xml
+<asp:Repeater ID="Categories" runat="server">
+    <ItemTemplate>
+        <a href="ProductsByCategory.aspx?ID=<%# Eval("CategoryID") %>">
+            <%# Eval("Name") %>
+        </a>
+        <br />
+    </ItemTemplate>
+</asp:Repeater>
+```
+
+Each category link, when clicked, redirects to the `ProductsByCategory.aspx` page with the respective category's ID passed in the query string. This action, in turn, populates the page with products corresponding to that category.
+
+---
+
+## Concepts Explored
+
+- **Page Navigation & Parameters**: The introduction of the Repeater control and passing of category IDs through query strings demonstrate a fundamental way of navigating between pages and passing parameters in ASP.NET.
   
-- **Data Retrieval**: Using ADO.NET to fetch data from a SQL Server database.
+- **Parameterized Queries**: Emphasizing secure coding practices, the code uses parameterized SQL queries to prevent potential SQL injection attacks.
   
-- **Data Binding**: The act of tying data to UI components, in this case, binding the fetched categories to a GridView.
-
-- **Stored Procedure Execution**: Leveraging stored procedures, which are pre-written SQL statements stored in the database, for data retrieval. In this commit, we've utilized the `spGetAllCategories` stored procedure that was created earlier in the course.
-
-### Result
-
-Upon visiting the home page, users will now see a table displaying all the Categories from the "SportsStoreDB" database.
 
 ---
 
 ## Moving Forward
 
-The project is evolving, and with each commit, we are diving deeper into the intricacies of ASP.NET and database interactions. As always, if you feel lost or need more context on the changes, reviewing previous commits can be highly beneficial.
+As the project evolves, we're gradually delving into more advanced features and concepts of ASP.NET, refining our application into a functional ecommerce platform. If certain changes or concepts seem unclear, always consider reverting to previous commits for a deeper understanding.
 
-Stay curious and happy coding!
+Stay engaged and happy coding!
