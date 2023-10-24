@@ -19,3 +19,11 @@ textarea {
         padding: 0;
     }
 }
+
+.productImage {
+    width: 200px; /* adjust as needed */
+    max-width: 200px; /* adjust as needed */
+    height: 200px; /* adjust as needed */
+    object-fit: cover; /* maintains aspect ratio and fills the element box */
+}
+

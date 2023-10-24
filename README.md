@@ -4,55 +4,60 @@
 
 ### Navigating Through Commits
 
-To grasp the complete narrative and evolution of this project, it's essential to delve into the commit history. Each commit crystallizes the discussions and demonstrations of each class, with in-depth explanations and annotations. If you're hopping in at this stage or find certain modifications puzzling, it's beneficial to refer back to previous commits to trace the project's trajectory.
+For a comprehensive understanding of the project's development, diving into the commit history is crucial. Each commit encapsulates the conversations and lessons of every class, providing detailed explanations and comments. If you're jumping into this phase or if a particular change seems obscure, revisiting prior commits can offer invaluable context and insight.
 
 ---
 
 ## Current Commit Changes
 
-### 1. Introduction of the [`Product.aspx`](Product.aspx) Page
+### 1. Image Enhancement on [`Product.aspx`](Product.aspx)
 
-We've added a new dedicated page named [`Product.aspx`](Product.aspx) to showcase individual product details. The page contains several ASP.NET Label controls that dynamically populate and render product-specific data:
+The [`Product.aspx`](Product.aspx) page now sports a dynamic image representation of the product. An ASP.NET Image control has been added:
 
 ```xml
-<form id="form1" runat="server">
-    <h2><asp:Label ID="lblName" runat="server" Text="Product Name"></asp:Label></h2>
-    <p><asp:Label ID="lblDescription" runat="server" Text="Description"></asp:Label></p>
-    <p>Price: <asp:Label ID="lblPrice" runat="server" Text="0"></asp:Label></p>
-    <p><asp:Label ID="lblQuantity" runat="server" Text="0"></asp:Label></p>
-</form>
+<asp:Image ID="imgImage" runat="server" AlternateText="Image" CssClass="productImage" />
 ```
 
-### 2. Backend Logic for [`Product.aspx.cs`](Product.aspx)
+In the [`Product.aspx.cs`](Product.aspx) code-behind, this image control is dynamically populated based on the product data retrieved:
 
-The [`Product.aspx.cs`](Product.aspx) code-behind facilitates the fetching and rendering of product details:
+```csharp
+imgImage.ImageUrl = $"Content/images/{reader["Image"].ToString()}";
+```
 
-- **LoadProductDetails Method**: Connects to the "SportsStoreDB" and queries the individual product based on its ID. The method then assigns the product details to the respective Label controls on the page.
+### 2. Site.Master Refinements
 
-- **Page_Load Method**: Responsible for checking the presence of a product ID in the query string and then invoking the `LoadProductDetails` method to fetch and display the relevant product's details.
+Minor aesthetic and content adjustments have been made to the `Site.Master` file. This includes modifications like site name changes to better reflect the project's evolving nature.
 
-### 3. Refinements in [`ProductsByCategory.aspx`](ProductsByCategory.aspx) & `.cs`
+### 3. Incorporation of Product Images
 
-The [`ProductsByCategory.aspx`](ProductsByCategory.aspx) page has been further modified to provide links to individual products, guiding users to the [`Product.aspx`](Product.aspx) page with a specific product ID in the query string.
+A collection of product images has been introduced and stored under the directory `Content/images/`. These images are fetched dynamically based on product data and rendered on the [`Product.aspx`](Product.aspx) page.
 
-Additionally, in [`ProductsByCategory.aspx.cs`](ProductsByCategory.aspx.cs), logic has been introduced to ensure there's a category ID in the query string. If absent, users are redirected back to the [`Default.aspx`](Default.aspx) page.
+### 4. CSS Modifications
+
+The `Site.css` has been enhanced to dictate the maximum dimensions for product images with the `.productImage` class, ensuring consistent presentation and avoiding oversized or stretched images.
+
+### 5. Bootstrap Styles Update
+
+New versions of `bootstrap.css` and `bootstrap-min.css` have been fetched from [Bootswatch](https://bootswatch.com/). Incorporating these files ensures the application remains aesthetically up-to-date and benefits from the latest style enhancements and fixes from Bootstrap.
+
+### 6. Site.Master Integration with Pages
+
+The `Site.Master` has been applied to both the [`Product.aspx`](Product.aspx) and [`ProductsByCategory.aspx`](ProductsByCategory.aspx) pages. This ensures a uniform and consistent layout and navigation experience across these pages.
 
 ---
 
 ## Concepts Explored
 
-- **Individual Product Display**: The introduction of the [`Product.aspx`](Product.aspx) page marks our venture into displaying detailed information about individual products.
+- **Dynamic Image Rendering**: This commit has delved deep into the mechanics of dynamically loading and displaying images based on product data, enhancing the visual appeal of the [`Product.aspx`](Product.aspx) page.
   
-- **Query String Parameter Checking**: The check for the presence of query string parameters in both [`Product.aspx.cs`](Product.aspx) and `ProductsByCategory.aspx.cs` exemplifies best practices for ensuring expected behavior and preventing potential errors.
+- **CSS Styling & Bootstrap**: The importance of maintaining updated stylesheets for an evolving web application, along with the significance of external libraries like Bootstrap, has been underscored with this commit.
   
-- **DataReader Usage**: The use of `SqlDataReader` in [`Product.aspx.cs`](Product.aspx) showcases another method of reading data from a database, offering a fast and efficient way to read and forward-only data.
-
-- **Dynamic Content Rendering**: The dynamism introduced in this commit — be it redirecting users based on missing parameters, or dynamically rendering product details based on provided IDs — highlights the flexible capabilities of ASP.NET in web app development.
+- **Master Pages**: The concept of master pages in ASP.NET, which allows for a consistent layout across multiple pages, is demonstrated by applying `Site.Master` to various content pages.
 
 ---
 
 ## Moving Forward
 
-With each commit, our project continues to expand and diversify, integrating more advanced ASP.NET features. As we build upon this foundation, it's essential to occasionally reference previous commits if you need clarity or context.
+As the project expands, each commit brings with it a set of new features and improvements. To gain a clear understanding, occasionally referencing previous commits will be invaluable. 
 
-Stay engaged, and let's continue this coding journey!
+Keep up the enthusiasm, and let's advance this coding journey!

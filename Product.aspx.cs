@@ -28,6 +28,7 @@ namespace SportsStore
                 if (reader.Read())
                 {
                     lblName.Text = reader["Name"].ToString();
+                    imgImage.ImageUrl = $"Content/images/{reader["Image"].ToString()}";
                     lblDescription.Text = reader["Description"].ToString();
                     lblPrice.Text = reader["Price"].ToString();
                     if (reader["Quantity"] == DBNull.Value || Convert.ToInt32(reader["Quantity"]) == 0)
