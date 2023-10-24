@@ -4,66 +4,55 @@
 
 ### Navigating Through Commits
 
-To comprehensively understand and follow the development of this project, it's pivotal to review the commit history. Each commit captures the content and topics discussed during each class session, providing detailed explanations and context. If you're starting mid-project or some changes seem ambiguous, revisiting prior commits can illuminate the path we've traversed.
+To grasp the complete narrative and evolution of this project, it's essential to delve into the commit history. Each commit crystallizes the discussions and demonstrations of each class, with in-depth explanations and annotations. If you're hopping in at this stage or find certain modifications puzzling, it's beneficial to refer back to previous commits to trace the project's trajectory.
 
 ---
 
 ## Current Commit Changes
 
-### 1. Introduction of the [`ProductsByCategory.aspx`](ProductsByCategory.aspx) Page
+### 1. Introduction of the [`Product.aspx`](Product.aspx) Page
 
-We've expanded the project by introducing a new page named `ProductsByCategory.aspx`. This page is designed to display products under a specific category.
-
-The central component on this page is the ASP.NET GridView control:
+We've added a new dedicated page named [`Product.aspx`](Product.aspx) to showcase individual product details. The page contains several ASP.NET Label controls that dynamically populate and render product-specific data:
 
 ```xml
-<asp:GridView ID="Products" runat="server"></asp:GridView>
+<form id="form1" runat="server">
+    <h2><asp:Label ID="lblName" runat="server" Text="Product Name"></asp:Label></h2>
+    <p><asp:Label ID="lblDescription" runat="server" Text="Description"></asp:Label></p>
+    <p>Price: <asp:Label ID="lblPrice" runat="server" Text="0"></asp:Label></p>
+    <p><asp:Label ID="lblQuantity" runat="server" Text="0"></asp:Label></p>
+</form>
 ```
 
-The GridView is intended to display product data in a tabular format.
+### 2. Backend Logic for [`Product.aspx.cs`](Product.aspx)
 
-### 2. Backend Logic for [`ProductsByCategory.aspx.cs`](ProductsByCategory.aspx.cs)
+The [`Product.aspx.cs`](Product.aspx) code-behind facilitates the fetching and rendering of product details:
 
-The code-behind for this page (`ProductsByCategory.aspx.cs`) has the following essential elements:
+- **LoadProductDetails Method**: Connects to the "SportsStoreDB" and queries the individual product based on its ID. The method then assigns the product details to the respective Label controls on the page.
 
-- **GetDataFromDatabase Method**: This method does the heavy lifting:
+- **Page_Load Method**: Responsible for checking the presence of a product ID in the query string and then invoking the `LoadProductDetails` method to fetch and display the relevant product's details.
 
-    - Establishes a connection to "SportsStoreDB" via the connection string.
-    - Retrieves the category ID from the query string.
-    - Executes a stored procedure (`spGetProductsinCategory`) with a parameterized query to prevent SQL injection, and fetches the products related to the provided category ID.
-    
-- **Page_Load Method**: Similar to the earlier approach, this method binds the fetched data to the GridView (`Products`) so it's displayed when the page loads.
+### 3. Refinements in [`ProductsByCategory.aspx`](ProductsByCategory.aspx) & `.cs`
 
-### 3. Refinement of [`Default.aspx`](Default.aspx) GridView
+The [`ProductsByCategory.aspx`](ProductsByCategory.aspx) page has been further modified to provide links to individual products, guiding users to the [`Product.aspx`](Product.aspx) page with a specific product ID in the query string.
 
-The GridView in `Default.aspx` has been replaced by an ASP.NET Repeater control. This control is more flexible and allows us to display categories as clickable links:
-
-```xml
-<asp:Repeater ID="Categories" runat="server">
-    <ItemTemplate>
-        <a href="ProductsByCategory.aspx?ID=<%# Eval("CategoryID") %>">
-            <%# Eval("Name") %>
-        </a>
-        <br />
-    </ItemTemplate>
-</asp:Repeater>
-```
-
-Each category link, when clicked, redirects to the `ProductsByCategory.aspx` page with the respective category's ID passed in the query string. This action, in turn, populates the page with products corresponding to that category.
+Additionally, in [`ProductsByCategory.aspx.cs`](ProductsByCategory.aspx.cs), logic has been introduced to ensure there's a category ID in the query string. If absent, users are redirected back to the [`Default.aspx`](Default.aspx) page.
 
 ---
 
 ## Concepts Explored
 
-- **Page Navigation & Parameters**: The introduction of the Repeater control and passing of category IDs through query strings demonstrate a fundamental way of navigating between pages and passing parameters in ASP.NET.
+- **Individual Product Display**: The introduction of the [`Product.aspx`](Product.aspx) page marks our venture into displaying detailed information about individual products.
   
-- **Parameterized Queries**: Emphasizing secure coding practices, the code uses parameterized SQL queries to prevent potential SQL injection attacks.
+- **Query String Parameter Checking**: The check for the presence of query string parameters in both [`Product.aspx.cs`](Product.aspx) and `ProductsByCategory.aspx.cs` exemplifies best practices for ensuring expected behavior and preventing potential errors.
   
+- **DataReader Usage**: The use of `SqlDataReader` in [`Product.aspx.cs`](Product.aspx) showcases another method of reading data from a database, offering a fast and efficient way to read and forward-only data.
+
+- **Dynamic Content Rendering**: The dynamism introduced in this commit — be it redirecting users based on missing parameters, or dynamically rendering product details based on provided IDs — highlights the flexible capabilities of ASP.NET in web app development.
 
 ---
 
 ## Moving Forward
 
-As the project evolves, we're gradually delving into more advanced features and concepts of ASP.NET, refining our application into a functional ecommerce platform. If certain changes or concepts seem unclear, always consider reverting to previous commits for a deeper understanding.
+With each commit, our project continues to expand and diversify, integrating more advanced ASP.NET features. As we build upon this foundation, it's essential to occasionally reference previous commits if you need clarity or context.
 
-Stay engaged and happy coding!
+Stay engaged, and let's continue this coding journey!

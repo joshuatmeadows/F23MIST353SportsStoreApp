@@ -43,8 +43,19 @@ namespace SportsStore
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            Products.DataSource = GetDataFromDatabase();
-            Products.DataBind();
+            if (!IsPostBack)
+            {
+                string IDValue = Request.QueryString["ID"];
+                if (string.IsNullOrEmpty(IDValue))
+                {
+                    Response.Redirect("Default.aspx");
+                }
+                else
+                {
+                    Products.DataSource = GetDataFromDatabase();
+                    Products.DataBind();
+                }
+            }
         }
     }
 }
