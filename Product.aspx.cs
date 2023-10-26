@@ -58,5 +58,15 @@ namespace SportsStore
                 }
             }
         }
+        protected void btnAddToCart_Click(object sender, EventArgs e)
+        {
+            string productId = Request.QueryString["ID"]; // Assuming the product ID is passed in the query string
+            int quantity = int.Parse(ddlQuantity.SelectedValue);
+
+            Session["ProductID"] = productId;
+            Session["Quantity"] = quantity;
+
+            Response.Redirect("Cart.aspx");
+        }
     }
 }

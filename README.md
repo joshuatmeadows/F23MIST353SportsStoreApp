@@ -10,54 +10,38 @@ For a comprehensive understanding of the project's development, diving into the 
 
 ## Current Commit Changes
 
-### 1. Image Enhancement on [`Product.aspx`](Product.aspx)
+### 1. Introduction of [`Cart.aspx`](Cart.aspx)
 
-The [`Product.aspx`](Product.aspx) page now sports a dynamic image representation of the product. An ASP.NET Image control has been added:
+The [`Cart.aspx`](Cart.aspx) page is the newest addition to our web application. This page allows users to view their cart items and facilitates the addition of products to the cart. Here are the core functionalities it offers:
 
-```xml
-<asp:Image ID="imgImage" runat="server" AlternateText="Image" CssClass="productImage" />
-```
+- **EnsureCartID**: This method ensures a unique CartID is maintained for every user session, utilizing the Session state for persistence.
+  
+- **ProcessCart**: This method is responsible for processing cart functionalities, i.e., adding products to the cart, updating existing items' quantities, and so forth. This relies on stored procedures like `spShoppingCartGetItems`, `spShoppingCartAddItem`, and `spShoppingCartUpdateItem` for backend operations.
+  
+- **DisplayCartItems**: This method fetches the items currently in the cart and displays them using the `gvCartItems` GridView control.
 
-In the [`Product.aspx.cs`](Product.aspx) code-behind, this image control is dynamically populated based on the product data retrieved:
+### 2. Enhanced [`Product.aspx`](Product.aspx)
 
-```csharp
-imgImage.ImageUrl = $"Content/images/{reader["Image"].ToString()}";
-```
+The [`Product.aspx`](Product.aspx) page has undergone several enhancements:
 
-### 2. Site.Master Refinements
-
-Minor aesthetic and content adjustments have been made to the `Site.Master` file. This includes modifications like site name changes to better reflect the project's evolving nature.
-
-### 3. Incorporation of Product Images
-
-A collection of product images has been introduced and stored under the directory `Content/images/`. These images are fetched dynamically based on product data and rendered on the [`Product.aspx`](Product.aspx) page.
-
-### 4. CSS Modifications
-
-The `Site.css` has been enhanced to dictate the maximum dimensions for product images with the `.productImage` class, ensuring consistent presentation and avoiding oversized or stretched images.
-
-### 5. Bootstrap Styles Update
-
-New versions of `bootstrap.css` and `bootstrap-min.css` have been fetched from [Bootswatch](https://bootswatch.com/). Incorporating these files ensures the application remains aesthetically up-to-date and benefits from the latest style enhancements and fixes from Bootstrap.
-
-### 6. Site.Master Integration with Pages
-
-The `Site.Master` has been applied to both the [`Product.aspx`](Product.aspx) and [`ProductsByCategory.aspx`](ProductsByCategory.aspx) pages. This ensures a uniform and consistent layout and navigation experience across these pages.
+- **Quantity Dropdown**: Users can now select the desired quantity of a product before adding it to the cart, providing better user experience and control.
+  
+- **Add to Cart Button**: A button has been introduced allowing users to seamlessly add products to their cart. 
+  
+- **Cosmetic Changes**: Aesthetic improvements have been made to ensure the page is more user-friendly and appealing.
 
 ---
 
 ## Concepts Explored
 
-- **Dynamic Image Rendering**: This commit has delved deep into the mechanics of dynamically loading and displaying images based on product data, enhancing the visual appeal of the [`Product.aspx`](Product.aspx) page.
+- **Shopping Cart Mechanism**: This commit mainly revolves around the fundamental concept of maintaining a shopping cart in an e-commerce platform. This involves generating unique cart IDs for individual sessions, adding items to the cart, updating cart items, and displaying the cart.
   
-- **CSS Styling & Bootstrap**: The importance of maintaining updated stylesheets for an evolving web application, along with the significance of external libraries like Bootstrap, has been underscored with this commit.
+- **ASP.NET Session State**: The utility of the session state in ASP.NET has been showcased, where it's used to persist data like CartID, ProductID, and Quantity across postbacks and different pages.
   
-- **Master Pages**: The concept of master pages in ASP.NET, which allows for a consistent layout across multiple pages, is demonstrated by applying `Site.Master` to various content pages.
+- **Stored Procedures**: The use of stored procedures for database operations emphasizes good security practices, abstraction of SQL logic, and improved performance.
 
 ---
 
 ## Moving Forward
 
-As the project expands, each commit brings with it a set of new features and improvements. To gain a clear understanding, occasionally referencing previous commits will be invaluable. 
-
-Keep up the enthusiasm, and let's advance this coding journey!
+The cart functionality is a pivotal component of any e-commerce platform, allowing users to accumulate their desired products and proceed to checkout. As we continue to enhance our SportsStore application, it's vital to test these functionalities thoroughly, ensuring a smooth user experience. Let's keep coding and refining our web application!
