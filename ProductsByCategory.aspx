@@ -9,7 +9,14 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            <asp:GridView ID="Products" runat="server"></asp:GridView>
+            <asp:Repeater ID="Products" runat="server">
+                <ItemTemplate>
+                    <a href="Product.aspx?ID=<%# Eval("ProductID") %>">
+                        <%# Eval("Name") %>
+                    </a>
+                    <br />
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
     </form>
 </body>

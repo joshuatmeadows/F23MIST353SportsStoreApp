@@ -19,3 +19,7 @@ textarea {
         padding: 0;
     }
 }
+
+.productImage{
+    max-width: 200px;
+}

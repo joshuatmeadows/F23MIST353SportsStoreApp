@@ -43,6 +43,11 @@ namespace SportsStore
         }
         protected void Page_Load(object sender, EventArgs e)
         {
+            string categoryId = Request.QueryString["ID"];
+            if (string.IsNullOrEmpty(categoryId))
+            {
+                Response.Redirect("Default");
+            }
             Products.DataSource = GetDataFromDatabase();
             Products.DataBind();
         }
