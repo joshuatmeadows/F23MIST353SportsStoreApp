@@ -62,5 +62,16 @@ namespace SportsStore
                 reader.Close();
             }
         }
+        protected void btnAddToCart_Click(object sender, EventArgs e)
+        {
+            string productId = Request.QueryString["ID"];
+            int quantity = int.Parse(ddlQuantity.SelectedValue);
+
+            Session["ProductID"] = productId;
+            Session["Quantity"] = quantity;
+
+            Response.Redirect("Cart");
+
+        }
     }
 }
