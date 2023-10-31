@@ -16,6 +16,7 @@ namespace SportsStore
             if(!IsPostBack)
             {
                 EnsureCartID();
+                ProcessCart();
             }
         }
         private void EnsureCartID()
@@ -62,10 +63,25 @@ namespace SportsStore
                             cmd.CommandType=System.Data.CommandType.StoredProcedure;
                             cmd.Parameters.AddWithValue("@CartID", cartID);
                             cmd.Parameters.AddWithValue("ProductID",productID);
+                            cmd.ExecuteNonQuery();
                         }
+                    }
+                    using(SqlCommand cmd= new SqlCommand("spShoppingCartUpdateItem", conn))
+                    {
+                        cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@CartID", cartID);
+                        cmd.Parameters.AddWithValue("@ProductID", productID);
+                        cmd.Parameters.AddWithValue("@Quantity", prevQuantity + requestQuantity);
+                        cmd.ExecuteNonQuery();
                     }
                 }
             }
+            Session.Remove("ProductID");
+            Session.Remove("Quantity");
+        }
+        private void DisplayCartItems()
+        {
+
         }
     }
 }
