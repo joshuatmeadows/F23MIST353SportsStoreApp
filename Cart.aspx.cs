@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -17,6 +18,7 @@ namespace SportsStore
             {
                 EnsureCartID();
                 ProcessCart();
+                DisplayCartItems();
             }
         }
         private void EnsureCartID()
@@ -81,7 +83,26 @@ namespace SportsStore
         }
         private void DisplayCartItems()
         {
+            string connString = ConfigurationManager.ConnectionStrings["SportsStoreDB"].ToString();
+            string cartID = Session["CartID"].ToString();
 
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using(SqlCommand cmd = new SqlCommand("spShoppingCartGetItems", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CartID", cartID);
+
+                    using(SqlDataAdapter da =new SqlDataAdapter(cmd))
+                    {
+                        DataTable dt = new DataTable();
+                        da.Fill(dt);
+                        gvCartItems.DataSource = dt;
+                        gvCartItems.DataBind();
+                    }
+                }
+            }
         }
     }
 }

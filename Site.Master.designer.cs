@@ -15,6 +15,24 @@ namespace SportsStore
     {
 
         /// <summary>
+        /// LoginPlaceholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder LoginPlaceholder;
+
+        /// <summary>
+        /// LogoutPlaceholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder LogoutPlaceholder;
+
+        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>
