@@ -4,44 +4,42 @@
 
 ### Navigating Through Commits
 
-For a comprehensive understanding of the project's development, diving into the commit history is crucial. Each commit encapsulates the conversations and lessons of every class, providing detailed explanations and comments. If you're jumping into this phase or if a particular change seems obscure, revisiting prior commits can offer invaluable context and insight.
+Exploring the commit history is crucial for a clear understanding of the project's progression. Each commit is a snapshot of a learning module, complete with explanations and discussions relevant to that phase. To fully grasp the current state of the project, reviewing previous commits is strongly recommended.
 
 ---
 
 ## Current Commit Changes
 
-### 1. Introduction of [`Cart.aspx`](Cart.aspx)
+### 1. User Authentication
 
-The [`Cart.aspx`](Cart.aspx) page is the newest addition to our web application. This page allows users to view their cart items and facilitates the addition of products to the cart. Here are the core functionalities it offers:
+This iteration has focused on integrating user authentication into the application, laying the groundwork for a secure and personalized user experience.
 
-- **EnsureCartID**: This method ensures a unique CartID is maintained for every user session, utilizing the Session state for persistence.
+- **Registration and Login**: Implemented following the Microsoft Owin tutorial, this feature allows new users to register and existing users to log into the application. [Adding ASP.NET Identity](https://learn.microsoft.com/en-us/aspnet/identity/overview/getting-started/adding-aspnet-identity-to-an-empty-or-existing-web-forms-project)
+
+- **Signout Mechanism**: A straightforward signout page has been established to enable users to safely log out from the application. The code behind triggers the Owin context's sign-out method and redirects to the homepage.
+
+### 2. Navigation Bar Update
+
+The `Site.Master` file has been updated to dynamically display login and logout options based on the user's authentication status.
+
+- **Logged-In State**: When a user is logged in, the navigation bar will display a 'Logout' option.
   
-- **ProcessCart**: This method is responsible for processing cart functionalities, i.e., adding products to the cart, updating existing items' quantities, and so forth. This relies on stored procedures like `spShoppingCartGetItems`, `spShoppingCartAddItem`, and `spShoppingCartUpdateItem` for backend operations.
-  
-- **DisplayCartItems**: This method fetches the items currently in the cart and displays them using the `gvCartItems` GridView control.
+- **Anonymous State**: For users not logged in, the navigation bar will show a 'Login' option. 
 
-### 2. Enhanced [`Product.aspx`](Product.aspx)
-
-The [`Product.aspx`](Product.aspx) page has undergone several enhancements:
-
-- **Quantity Dropdown**: Users can now select the desired quantity of a product before adding it to the cart, providing better user experience and control.
-  
-- **Add to Cart Button**: A button has been introduced allowing users to seamlessly add products to their cart. 
-  
-- **Cosmetic Changes**: Aesthetic improvements have been made to ensure the page is more user-friendly and appealing.
+This logic is managed through the `asp:LoginView` control which renders content templates based on the user's login status.
 
 ---
 
 ## Concepts Explored
 
-- **Shopping Cart Mechanism**: This commit mainly revolves around the fundamental concept of maintaining a shopping cart in an e-commerce platform. This involves generating unique cart IDs for individual sessions, adding items to the cart, updating cart items, and displaying the cart.
-  
-- **ASP.NET Session State**: The utility of the session state in ASP.NET has been showcased, where it's used to persist data like CartID, ProductID, and Quantity across postbacks and different pages.
-  
-- **Stored Procedures**: The use of stored procedures for database operations emphasizes good security practices, abstraction of SQL logic, and improved performance.
+- **ASP.NET Identity**: This update primarily integrates ASP.NET Identity for user management, which includes features for authentication and authorization.
+
+- **OWIN Middleware**: The use of Owin as middleware for ASP.NET Identity is highlighted. Owin stands for the Open Web Interface for .NET, which decouples the web server from the application, making it possible to host on different servers.
+
+- **Security Best Practices**: By leveraging Owin and ASP.NET Identity, the application adheres to modern security practices, managing passwords, user data, and authentication tokens effectively.
 
 ---
 
 ## Moving Forward
 
-The cart functionality is a pivotal component of any e-commerce platform, allowing users to accumulate their desired products and proceed to checkout. As we continue to enhance our SportsStore application, it's vital to test these functionalities thoroughly, ensuring a smooth user experience. Let's keep coding and refining our web application!
+Introducing user authentication is a significant milestone that paves the way for personalized user interactions and secure transactions. Thorough testing of the login, registration, and logout features is essential to ensure robust security and a seamless user experience. Let's continue building on this strong foundation.
