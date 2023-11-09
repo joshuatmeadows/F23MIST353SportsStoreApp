@@ -26,8 +26,9 @@
             </div>
             <div style="margin-bottom: 10px">
                <div>
-                  <asp:Button runat="server" OnClick="SignIn" Text="Log in" CssClass="btn-primary" />
-                   <a href="/Register" class="btn-danger">Register</a>
+                  <asp:Button runat="server" OnClick="SignIn" Text="Log in" CssClass="btn" />
+                   <br />
+                   <a href="/Register" class="btn">Register</a>
                </div>
             </div>
          </asp:PlaceHolder>

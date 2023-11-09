@@ -29,7 +29,7 @@
         </div>
         <div>
             <div>
-                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" />
+                <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" CssClass="btn" />
             </div>
         </div>
     </div>

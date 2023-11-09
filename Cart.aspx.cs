@@ -19,6 +19,7 @@ namespace SportsStore
                 EnsureCartID();
                 ProcessCart();
                 DisplayCartItems();
+                getCartTotal();
             }
         }
         private void EnsureCartID()
@@ -101,6 +102,25 @@ namespace SportsStore
                         gvCartItems.DataSource = dt;
                         gvCartItems.DataBind();
                     }
+                }
+            }
+        }
+        public void getCartTotal()
+        {
+            string connString = ConfigurationManager.ConnectionStrings["SportsStoreDB"].ToString();
+            string cartID = Session["CartID"].ToString();
+
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("spShoppingCartGetTotalAmount", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CartID", cartID);
+                    cmd.Parameters.Add("@TotalAmount", SqlDbType.Money, 16);
+                    cmd.Parameters["@TotalAmount"].Direction = ParameterDirection.Output;
+                    cmd.ExecuteNonQuery();
+                    CartTotal.Text = "Total: "+cmd.Parameters["@TotalAmount"].Value.ToString();
                 }
             }
         }
