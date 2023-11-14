@@ -24,5 +24,5 @@
         </asp:Repeater>
     </table>
         <asp:Label ID="CartTotal" runat="server"></asp:Label>
-    
+    <a href="Order" class="btn">Order Now!</a>
 </asp:Content>
