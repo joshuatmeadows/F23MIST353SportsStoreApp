@@ -19,6 +19,7 @@ namespace SportsStore
                 EnsureCartID();
                 ProcessCart();
                 DisplayCartItems();
+                getCartTotal();
             }
         }
 
@@ -112,10 +113,41 @@ namespace SportsStore
                         da.Fill(dt);
                         gvCartItems.DataSource = dt;
                         gvCartItems.DataBind();
+                        //if not empty, show the checkout button
+                        if (dt.Rows.Count > 0)
+                        {
+                            ShowCheckOut.Visible = true;
+                        }
+                        else
+                        {
+                            NoItems.Visible = true;
+                        }
                     }
                 }
             }
         }
+        public void getCartTotal()
+        {
+            string connString = ConfigurationManager.ConnectionStrings["SportsStoreDB"].ToString();
+            string cartID = Session["CartID"].ToString();
 
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("spShoppingCartGetTotalAmount", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@CartID", cartID);
+                    cmd.Parameters.Add("@TotalAmount", SqlDbType.Money, 16);
+                    cmd.Parameters["@TotalAmount"].Direction = ParameterDirection.Output;
+                    cmd.ExecuteNonQuery();
+                    // Check if the query result is not null before setting CartTotal.Text
+                    if (cmd.Parameters["@TotalAmount"].Value != DBNull.Value)
+                    {
+                        CartTotal.Text = "Total: " + cmd.Parameters["@TotalAmount"].Value.ToString();
+                    }
+                }
+            }
+        }
     }
 }
